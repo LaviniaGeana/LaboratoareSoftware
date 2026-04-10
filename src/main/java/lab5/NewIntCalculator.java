@@ -6,6 +6,12 @@ public class NewIntCalculator extends ACalculator
     {
         super(value);
     }
+
+    public NewIntCalculator()
+    {
+        super();
+    }
+
     @Override
     public void init(Object value)
     {
@@ -13,7 +19,8 @@ public class NewIntCalculator extends ACalculator
     }
     public NewIntCalculator add(Integer value)
     {
-        this.state = (Integer) state + value;
+
+        this.state = (Integer)state + value;
         return this;
     }
     public NewIntCalculator subtract(Integer value)

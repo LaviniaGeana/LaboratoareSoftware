@@ -8,6 +8,11 @@ public abstract class ACalculator
     {
         this.state = state;
     }
+
+    public ACalculator() {
+
+    }
+
     public Object result()
     {
         return state;
@@ -17,6 +22,7 @@ public abstract class ACalculator
         state = 0;
         return this;
     }
-    public abstract void init(Object value);
 
+
+    public abstract void init(Object value);
 }

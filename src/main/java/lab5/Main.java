@@ -9,7 +9,9 @@ public class Main
         System.out.println("a) "+result1);
 
         NewIntCalculator intCalc = new NewIntCalculator(10);
-        Object result2=intCalc.add(5).subtract(3).multiply(2).result();
+       // Object result2=intCalc.add(5).subtract(3).multiply(2).result();
+      //  System.out.println("b) "+result2);
+        Object result2=intCalc.add(5);
         System.out.println("b) "+result2);
 
         DoubleCalculator doubleCalc = new DoubleCalculator(10.0);
