@@ -8,20 +8,13 @@ public class MediaInterested implements Observer {
         this.name = name;
     }
 
-    @Override
-    public void update(String message)
-    {
-        doSomeLogic(message);
-    }
-
-
     public void doSomeLogic(String message)
     {
         System.out.println("["+name + "] received update: " + message);
     }
 
-
-
-
-
+    @Override
+    public void update(String message) {
+        doSomeLogic(message);
+    }
 }
