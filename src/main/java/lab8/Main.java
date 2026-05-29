@@ -15,5 +15,9 @@ public class Main
 
         File fisierExcel2=new File("laborator8_output.xlsx");
         citire.Genereaza(fisierExcel,fisierExcel2);
+
+        File fisierExcel3=new File("laborator8_2_output.xlsx");
+        citire.Genereaza2(fisierExcel,fisierExcel3);
+
     }
 }

@@ -13,15 +13,15 @@ import java.util.Iterator;
 
 public class ExcelReader {
 
-    public void readFile(final File file){
+    public void readFile(final File file) {
 
-        try(InputStream in = new FileInputStream(file)){
+        try (InputStream in = new FileInputStream(file)) {
 
             Workbook workbook = new XSSFWorkbook(in);
             Sheet sheet = workbook.getSheetAt(0);
 
             Iterator<Row> rowIterator = sheet.iterator();
-            while(rowIterator.hasNext()) {
+            while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
 
                 Iterator<Cell> cellIterator = row.cellIterator();
@@ -47,7 +47,7 @@ public class ExcelReader {
 
             }
 
-        } catch (final IOException e){
+        } catch (final IOException e) {
             e.printStackTrace();
         }
     }
@@ -119,4 +119,52 @@ public class ExcelReader {
         }
     }
 
+    public void Genereaza2(File inputFile, File outputFile) {
+        try (InputStream in = new FileInputStream(inputFile);
+             Workbook workbookInput = new XSSFWorkbook(in);
+             Workbook workbookOutput = new XSSFWorkbook()) {
+
+            Sheet sheetInput = workbookInput.getSheetAt(0);
+            Sheet sheetOutput = workbookOutput.createSheet("Medii cu Formula");
+
+            for (int i = 0; i <= sheetInput.getLastRowNum(); i++) {
+                Row rowInput = sheetInput.getRow(i);
+
+                if (rowInput == null) {
+                    continue;
+                }
+                Row rowOutput = sheetOutput.createRow(i);
+                int lastCellIndex = rowInput.getLastCellNum();
+
+                for (int j = 0; j < lastCellIndex; j++) {
+                    Cell cellInput = rowInput.getCell(j);
+                    Cell cellOutput = rowOutput.createCell(j);
+
+                    if (cellInput != null) {
+                        switch (cellInput.getCellType()) {
+                            case STRING:
+                                cellOutput.setCellValue(cellInput.getStringCellValue());
+                                break;
+                            case NUMERIC:
+                                cellOutput.setCellValue(cellInput.getNumericCellValue());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                int excelRowNumber = i + 1;
+                Cell cellFormula = rowOutput.createCell(lastCellIndex);
+                String formula = "AVERAGE(D" + excelRowNumber + ":F" + excelRowNumber + ")";
+                cellFormula.setCellFormula(formula);
+            }
+            try (FileOutputStream out = new FileOutputStream(outputFile)) {
+                workbookOutput.write(out);
+            }
+            System.out.println("Fisierul a fost generat!");
+        } catch (IOException e) {
+            System.err.println("Eroare: " + e.getMessage());
+        }
+
+    }
 }
