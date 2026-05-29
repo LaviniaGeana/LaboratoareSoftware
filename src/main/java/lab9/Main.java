@@ -7,79 +7,51 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Random rand=new Random();
+        List<Integer> list = new ArrayList<Integer>();
 
-        List<Integer> numere= IntStream.range(0,10).map(i->5+rand.nextInt(21)).boxed().collect(Collectors.toList());
-        System.out.println("Lista initiala" +numere);
+        Random rand = new Random();
 
-        //a suma
-        int sum = numere.stream().reduce(0, Integer::sum);
-        System.out.println("Suma : " + sum);
-
-        //b min si max
-
-        int maxim = numere.stream().max(Comparator.naturalOrder()).orElseThrow();
-        int minim = numere.stream().min(Comparator.naturalOrder()).orElseThrow();
-
-        System.out.println("Maxim : " + maxim);
-        System.out.println("Minim : " + minim);
-
-        //c
-        List<Integer> numere2=numere.stream().filter(n-> n>=10 && n<=20).collect(Collectors.toList());
-        System.out.println("Lista modificata " +numere2);
-
-        //d
-
-        List<Double> numereDouble = numere.stream().map(Double::valueOf).collect(Collectors.toList());
-        System.out.println("Lista transformata : " +numereDouble);
-
-
-        //e
-
-        Optional<Integer> item=numere.stream().filter(n->n==12).findAny();
-        if(item.isPresent())
+        for (int i = 0; i < 10; i++)
         {
-            System.out.println("Am gasit elementul: "+item.get());
-
+            list.add(rand.nextInt(5,25));
         }
-        else
-        {
-            System.out.println("Nu am gasit elementul");
-        }
+        System.out.println(list);
 
+        int sum=list.stream().reduce(0,Integer::sum);
+        System.out.println("Sum: "+ sum);
+
+
+        int max=list.stream().max(Integer::compareTo).get();
+        System.out.println("Max: "+ max);
+        int min=list.stream().min(Integer::compareTo).get();
+        System.out.println("Min: "+ min);
+
+        List<Integer> listDif=list.stream().filter(n->n>=10 && n<=20).collect(Collectors.toList());
+        System.out.println("ListDif: "+ listDif);
+
+        List<Double> listDif2 = list.stream().map(n -> n.doubleValue()).collect(Collectors.toList());
+        System.out.println("ListDif2: " + listDif2);
+
+        List<Integer> listFiltrata=list.stream().filter(n->n==12).collect(Collectors.toList());
+        System.out.println("ListFiltrata: "+ listFiltrata);
 
         System.out.println("---------------------------------------------");
 
+        //a
         String string="Acesta este un program scris in java pentru expresii lambda";
-        System.out.println("String initial: "+string);
-        List<String>wordList=List.of(string.split(" "));
-        List<String> cuvinte = wordList.stream()
-                .filter(c -> c.length() >= 5)
-                .collect(Collectors.toList());
-        long numarCuvinte = wordList.stream()
-                .filter(c -> c.length() >= 5)
-                .count();
+        List<String> cuvinte=List.of(string.split(" "));
 
-        System.out.println("a) " +cuvinte);
+        //b
+        String cuvinte2= String.valueOf(cuvinte.stream().filter(n->n.length()>=5).collect(Collectors.toList()).size());
+        System.out.println("Cuvinte: "+ cuvinte2);
 
+        //c
+        List<String> cuvinteOrdonate=cuvinte.stream().sorted().collect(Collectors.toList());
+        System.out.println("CuvinteOrdonate: "+ cuvinteOrdonate);
 
-        List<String> cuvinteOrdonate = cuvinte.stream()
-                .sorted()
-                .collect(Collectors.toList());
-
-        System.out.println("b) " + cuvinteOrdonate);
-
-        Optional<String> elementP = cuvinte.stream()
-                .filter(c -> c.startsWith("p"))
-                .findAny();
-
-        if(elementP.isPresent())
-        {
-            System.out.println("c) " +elementP.get());
-        }
-        else{
-            System.out.println("c) Nu am gasit elementul");
-        }
+        //d
+        String cuvant= String.valueOf(cuvinte.stream().filter(n->n.startsWith("p")).collect(Collectors.toList()));
+        System.out.println("Cuvant: "+ cuvant);
 
 
 
