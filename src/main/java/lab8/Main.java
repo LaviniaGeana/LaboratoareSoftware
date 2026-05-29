@@ -11,5 +11,9 @@ public class Main
         File fisierExcel=new File("laborator8_input.xlsx");
 
         citire.readFile(fisierExcel);
+
+
+        File fisierExcel2=new File("laborator8_output.xlsx");
+        citire.Genereaza(fisierExcel,fisierExcel2);
     }
 }
